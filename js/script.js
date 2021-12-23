@@ -4,14 +4,16 @@ const inputUsd = document.querySelector('#usd');
 
 inputRub.addEventListener('input', () => {
     const request = new XMLHttpRequest();
-    request.open('GET', 'js/current.json');
-    request.setRequestHeader('content-type', 'application/json; charset=utf-8');
+    request.open('GET', 'https://www.cbr-xml-daily.ru/daily_json.js');
+/*     request.setRequestHeader('Content-type', 'application/json; charset=utf-8'); */
     request.send();
-    request.addEventListener('readystatechange', () => {
-        if(request.readyState === 4 && request.status === 200) {
+    request.addEventListener('load', () => {
+        if(request.status === 200) {
             const data = JSON.parse(request.response);
-            inputUsd.value = (+inputRub.value * data.current.usd).toFixed(2);
-            inputEur.value = (+inputRub.value * data.current.eur).toFixed(2);
+            const usdRate = data.Valute.USD.Value;
+            const eurRate = data.Valute.EUR.Value;
+            inputUsd.value = (inputRub.value * usdRate).toFixed(2);
+            inputEur.value = (inputRub.value * eurRate).toFixed(2);
         } else {
             inputUsd.value = 'что то пошло не так';
             inputEur.value = 'что то пошло не так';
