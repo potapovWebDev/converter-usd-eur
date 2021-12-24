@@ -12,8 +12,8 @@ inputRub.addEventListener('input', () => {
             const data = JSON.parse(request.response);
             const usdRate = data.Valute.USD.Value;
             const eurRate = data.Valute.EUR.Value;
-            inputUsd.value = (inputRub.value * usdRate).toFixed(2);
-            inputEur.value = (inputRub.value * eurRate).toFixed(2);
+            inputUsd.value = (inputRub.value / usdRate).toFixed(2);
+            inputEur.value = (inputRub.value / eurRate).toFixed(2);
         } else {
             inputUsd.value = 'что то пошло не так';
             inputEur.value = 'что то пошло не так';
